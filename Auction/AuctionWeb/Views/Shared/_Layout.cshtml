@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Auction", "Index", "Products", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @if (TempData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Warning! @TempData["error"]</strong>
+            </div>
+        }
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>Success! @TempData["message"]</strong>
+            </div>
+        }
+        <div id="1">
+
+        </div>
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    @Scripts.Render("~/Scripts/jquery.signalR-2.4.0.min.js")
+    @Scripts.Render("/signalr/hubs")
+    <script type="text/javascript">
+        $(function () {
+            var sales = $.connection.SalesHub;
+            sales.client.addNewMessageToPage = function (name, message) {
+                var div = document.createElement("div");
+                div.setAttribute("class", "alert alert-success alert-dismissible");
+                div.setAttribute("role", "alert");
+                div.innerHTML = "<a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>";
+
+                var node = document.createTextNode(name + " sold to " + message);
+                div.appendChild(node);
+
+                var element = document.getElementById("1");
+                element.appendChild(div);
+            };
+            $.connection.hub.start();
+        });
+    </script>
+</body>
+</html>

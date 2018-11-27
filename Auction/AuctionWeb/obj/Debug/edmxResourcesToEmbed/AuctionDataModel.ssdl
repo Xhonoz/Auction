@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AuctionDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AuctionDataModelStoreContainer">
+    <EntitySet Name="ProfileSet" EntityType="AuctionDataModel.Store.ProfileSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductSet" EntityType="AuctionDataModel.Store.ProductSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BidSet" EntityType="AuctionDataModel.Store.BidSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RatingSet" EntityType="AuctionDataModel.Store.RatingSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PictureSet" EntityType="AuctionDataModel.Store.PictureSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FeaturesSet" EntityType="AuctionDataModel.Store.FeaturesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductFeatures" EntityType="AuctionDataModel.Store.ProductFeatures" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ProfileProduct" Association="AuctionDataModel.Store.ProfileProduct">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductProfile" Association="AuctionDataModel.Store.ProductProfile">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Profile" EntitySet="ProfileSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProfileBid" Association="AuctionDataModel.Store.ProfileBid">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Bid" EntitySet="BidSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductBid" Association="AuctionDataModel.Store.ProductBid">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Bid" EntitySet="BidSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProfileRating" Association="AuctionDataModel.Store.ProfileRating">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Rating" EntitySet="RatingSet" />
+    </AssociationSet>
+    <AssociationSet Name="RatingProduct" Association="AuctionDataModel.Store.RatingProduct">
+      <End Role="Rating" EntitySet="RatingSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="PictureProduct" Association="AuctionDataModel.Store.PictureProduct">
+      <End Role="Picture" EntitySet="PictureSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductFeatures_Product" Association="AuctionDataModel.Store.FK_ProductFeatures_Product">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="ProductFeatures" EntitySet="ProductFeatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductFeatures_Features" Association="AuctionDataModel.Store.FK_ProductFeatures_Features">
+      <End Role="Features" EntitySet="FeaturesSet" />
+      <End Role="ProductFeatures" EntitySet="ProductFeatures" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ProfileSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="lName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="endtime" Type="datetime" Nullable="false" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="buyer_Id" Type="int" Nullable="true" />
+    <Property Name="profile_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BidSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+    <Property Name="profile_Id" Type="int" Nullable="false" />
+    <Property Name="product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RatingSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="score" Type="int" Nullable="false" />
+    <Property Name="comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Author_Id" Type="int" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PictureSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="path" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeaturesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductFeatures">
+    <Key>
+      <PropertyRef Name="Product_Id" />
+      <PropertyRef Name="Features_Id" />
+    </Key>
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+    <Property Name="Features_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ProfileProduct">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="0..1" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="buyer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductProfile">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="*" />
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="profile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfileBid">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <End Role="Bid" Type="AuctionDataModel.Store.BidSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="profile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductBid">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <End Role="Bid" Type="AuctionDataModel.Store.BidSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfileRating">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <End Role="Rating" Type="AuctionDataModel.Store.RatingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Author_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RatingProduct">
+    <End Role="Rating" Type="AuctionDataModel.Store.RatingSet" Multiplicity="*" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PictureProduct">
+    <End Role="Picture" Type="AuctionDataModel.Store.PictureSet" Multiplicity="*" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Picture">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductFeatures_Product">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <End Role="ProductFeatures" Type="AuctionDataModel.Store.ProductFeatures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductFeatures">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductFeatures_Features">
+    <End Role="ProductFeatures" Type="AuctionDataModel.Store.ProductFeatures" Multiplicity="*" />
+    <End Role="Features" Type="AuctionDataModel.Store.FeaturesSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Features">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductFeatures">
+        <PropertyRef Name="Features_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

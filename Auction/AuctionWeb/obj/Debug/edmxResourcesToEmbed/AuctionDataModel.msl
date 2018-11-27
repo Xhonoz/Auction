@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AuctionDataModelStoreContainer" CdmEntityContainer="AuctionDataModelContainer">
+    <EntitySetMapping Name="ProfileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Profile)">
+        <MappingFragment StoreEntitySet="ProfileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fName" ColumnName="fName" />
+          <ScalarProperty Name="lName" ColumnName="lName" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Product)">
+        <MappingFragment StoreEntitySet="ProductSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="endtime" ColumnName="endtime" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BidSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Bid)">
+        <MappingFragment StoreEntitySet="BidSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RatingSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Rating)">
+        <MappingFragment StoreEntitySet="RatingSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PictureSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Picture)">
+        <MappingFragment StoreEntitySet="PictureSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="title" ColumnName="title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeaturesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Features)">
+        <MappingFragment StoreEntitySet="FeaturesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProfileProduct" TypeName="AuctionDataModel.ProfileProduct" StoreEntitySet="ProductSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="buyer_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="buyer_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductProfile" TypeName="AuctionDataModel.ProductProfile" StoreEntitySet="ProductSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="profile_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProfileBid" TypeName="AuctionDataModel.ProfileBid" StoreEntitySet="BidSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="profile_Id" />
+      </EndProperty>
+      <EndProperty Name="Bid">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductBid" TypeName="AuctionDataModel.ProductBid" StoreEntitySet="BidSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="product_Id" />
+      </EndProperty>
+      <EndProperty Name="Bid">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProfileRating" TypeName="AuctionDataModel.ProfileRating" StoreEntitySet="RatingSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="Author_Id" />
+      </EndProperty>
+      <EndProperty Name="Rating">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RatingProduct" TypeName="AuctionDataModel.RatingProduct" StoreEntitySet="RatingSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Rating">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PictureProduct" TypeName="AuctionDataModel.PictureProduct" StoreEntitySet="PictureSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Picture">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductFeatures" TypeName="AuctionDataModel.ProductFeatures" StoreEntitySet="ProductFeatures">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Features">
+        <ScalarProperty Name="Id" ColumnName="Features_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

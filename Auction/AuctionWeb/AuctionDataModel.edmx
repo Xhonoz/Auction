@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AuctionDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AuctionDataModelStoreContainer">
+    <EntitySet Name="ProfileSet" EntityType="AuctionDataModel.Store.ProfileSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductSet" EntityType="AuctionDataModel.Store.ProductSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BidSet" EntityType="AuctionDataModel.Store.BidSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RatingSet" EntityType="AuctionDataModel.Store.RatingSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PictureSet" EntityType="AuctionDataModel.Store.PictureSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FeaturesSet" EntityType="AuctionDataModel.Store.FeaturesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductFeatures" EntityType="AuctionDataModel.Store.ProductFeatures" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ProfileProduct" Association="AuctionDataModel.Store.ProfileProduct">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductProfile" Association="AuctionDataModel.Store.ProductProfile">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Profile" EntitySet="ProfileSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProfileBid" Association="AuctionDataModel.Store.ProfileBid">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Bid" EntitySet="BidSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProductBid" Association="AuctionDataModel.Store.ProductBid">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="Bid" EntitySet="BidSet" />
+    </AssociationSet>
+    <AssociationSet Name="ProfileRating" Association="AuctionDataModel.Store.ProfileRating">
+      <End Role="Profile" EntitySet="ProfileSet" />
+      <End Role="Rating" EntitySet="RatingSet" />
+    </AssociationSet>
+    <AssociationSet Name="RatingProduct" Association="AuctionDataModel.Store.RatingProduct">
+      <End Role="Rating" EntitySet="RatingSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="PictureProduct" Association="AuctionDataModel.Store.PictureProduct">
+      <End Role="Picture" EntitySet="PictureSet" />
+      <End Role="Product" EntitySet="ProductSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductFeatures_Product" Association="AuctionDataModel.Store.FK_ProductFeatures_Product">
+      <End Role="Product" EntitySet="ProductSet" />
+      <End Role="ProductFeatures" EntitySet="ProductFeatures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductFeatures_Features" Association="AuctionDataModel.Store.FK_ProductFeatures_Features">
+      <End Role="Features" EntitySet="FeaturesSet" />
+      <End Role="ProductFeatures" EntitySet="ProductFeatures" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="ProfileSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="fName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="lName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="endtime" Type="datetime" Nullable="false" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="buyer_Id" Type="int" Nullable="true" />
+    <Property Name="profile_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BidSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="amount" Type="int" Nullable="false" />
+    <Property Name="profile_Id" Type="int" Nullable="false" />
+    <Property Name="product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RatingSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="score" Type="int" Nullable="false" />
+    <Property Name="comment" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Author_Id" Type="int" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PictureSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="path" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="title" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FeaturesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="description" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProductFeatures">
+    <Key>
+      <PropertyRef Name="Product_Id" />
+      <PropertyRef Name="Features_Id" />
+    </Key>
+    <Property Name="Product_Id" Type="int" Nullable="false" />
+    <Property Name="Features_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="ProfileProduct">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="0..1" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="buyer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductProfile">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="*" />
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Product">
+        <PropertyRef Name="profile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfileBid">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <End Role="Bid" Type="AuctionDataModel.Store.BidSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="profile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductBid">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <End Role="Bid" Type="AuctionDataModel.Store.BidSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Bid">
+        <PropertyRef Name="product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProfileRating">
+    <End Role="Profile" Type="AuctionDataModel.Store.ProfileSet" Multiplicity="1" />
+    <End Role="Rating" Type="AuctionDataModel.Store.RatingSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Author_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RatingProduct">
+    <End Role="Rating" Type="AuctionDataModel.Store.RatingSet" Multiplicity="*" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PictureProduct">
+    <End Role="Picture" Type="AuctionDataModel.Store.PictureSet" Multiplicity="*" />
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Picture">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductFeatures_Product">
+    <End Role="Product" Type="AuctionDataModel.Store.ProductSet" Multiplicity="1" />
+    <End Role="ProductFeatures" Type="AuctionDataModel.Store.ProductFeatures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Product">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductFeatures">
+        <PropertyRef Name="Product_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductFeatures_Features">
+    <End Role="ProductFeatures" Type="AuctionDataModel.Store.ProductFeatures" Multiplicity="*" />
+    <End Role="Features" Type="AuctionDataModel.Store.FeaturesSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Features">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ProductFeatures">
+        <PropertyRef Name="Features_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="AuctionDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="AuctionDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ProfileSet" EntityType="AuctionDataModel.Profile" />
+          <EntitySet Name="ProductSet" EntityType="AuctionDataModel.Product" />
+          <AssociationSet Name="ProfileProduct" Association="AuctionDataModel.ProfileProduct">
+            <End Role="Profile" EntitySet="ProfileSet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductProfile" Association="AuctionDataModel.ProductProfile">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Profile" EntitySet="ProfileSet" />
+          </AssociationSet>
+          <EntitySet Name="BidSet" EntityType="AuctionDataModel.Bid" />
+          <AssociationSet Name="ProfileBid" Association="AuctionDataModel.ProfileBid">
+            <End Role="Profile" EntitySet="ProfileSet" />
+            <End Role="Bid" EntitySet="BidSet" />
+          </AssociationSet>
+          <AssociationSet Name="ProductBid" Association="AuctionDataModel.ProductBid">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Bid" EntitySet="BidSet" />
+          </AssociationSet>
+          <EntitySet Name="RatingSet" EntityType="AuctionDataModel.Rating" />
+          <AssociationSet Name="ProfileRating" Association="AuctionDataModel.ProfileRating">
+            <End Role="Profile" EntitySet="ProfileSet" />
+            <End Role="Rating" EntitySet="RatingSet" />
+          </AssociationSet>
+          <AssociationSet Name="RatingProduct" Association="AuctionDataModel.RatingProduct">
+            <End Role="Rating" EntitySet="RatingSet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+          <EntitySet Name="PictureSet" EntityType="AuctionDataModel.Picture" />
+          <AssociationSet Name="PictureProduct" Association="AuctionDataModel.PictureProduct">
+            <End Role="Picture" EntitySet="PictureSet" />
+            <End Role="Product" EntitySet="ProductSet" />
+          </AssociationSet>
+          <EntitySet Name="FeaturesSet" EntityType="AuctionDataModel.Features" />
+          <AssociationSet Name="ProductFeatures" Association="AuctionDataModel.ProductFeatures">
+            <End Role="Product" EntitySet="ProductSet" />
+            <End Role="Features" EntitySet="FeaturesSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Profile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="fName" Type="String" Nullable="false" />
+          <Property Name="lName" Type="String" Nullable="false" />
+          <Property Name="phone" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="purchases" Relationship="AuctionDataModel.ProfileProduct" FromRole="Profile" ToRole="Product" />
+          <NavigationProperty Name="products" Relationship="AuctionDataModel.ProductProfile" FromRole="Profile" ToRole="Product" />
+          <NavigationProperty Name="bids" Relationship="AuctionDataModel.ProfileBid" FromRole="Profile" ToRole="Bid" />
+          <NavigationProperty Name="Ratings" Relationship="AuctionDataModel.ProfileRating" FromRole="Profile" ToRole="Rating" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" />
+          <Property Name="description" Type="String" Nullable="false" />
+          <Property Name="endtime" Type="DateTime" Nullable="false" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="buyer" Relationship="AuctionDataModel.ProfileProduct" FromRole="Product" ToRole="Profile" />
+          <NavigationProperty Name="profile" Relationship="AuctionDataModel.ProductProfile" FromRole="Product" ToRole="Profile" />
+          <NavigationProperty Name="bids" Relationship="AuctionDataModel.ProductBid" FromRole="Product" ToRole="Bid" />
+          <NavigationProperty Name="Rating" Relationship="AuctionDataModel.RatingProduct" FromRole="Product" ToRole="Rating" />
+          <NavigationProperty Name="Picture" Relationship="AuctionDataModel.PictureProduct" FromRole="Product" ToRole="Picture" />
+          <NavigationProperty Name="Features" Relationship="AuctionDataModel.ProductFeatures" FromRole="Product" ToRole="Features" />
+        </EntityType>
+        <Association Name="ProfileProduct">
+          <End Type="AuctionDataModel.Profile" Role="Profile" Multiplicity="0..1" />
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="*" />
+        </Association>
+        <Association Name="ProductProfile">
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="AuctionDataModel.Profile" Role="Profile" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Bid">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="profile" Relationship="AuctionDataModel.ProfileBid" FromRole="Bid" ToRole="Profile" />
+          <NavigationProperty Name="product" Relationship="AuctionDataModel.ProductBid" FromRole="Bid" ToRole="Product" />
+        </EntityType>
+        <Association Name="ProfileBid">
+          <End Type="AuctionDataModel.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="AuctionDataModel.Bid" Role="Bid" Multiplicity="*" />
+        </Association>
+        <Association Name="ProductBid">
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="AuctionDataModel.Bid" Role="Bid" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Author" Relationship="AuctionDataModel.ProfileRating" FromRole="Rating" ToRole="Profile" />
+          <NavigationProperty Name="Product" Relationship="AuctionDataModel.RatingProduct" FromRole="Rating" ToRole="Product" />
+          <Property Name="score" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ProfileRating">
+          <End Type="AuctionDataModel.Profile" Role="Profile" Multiplicity="1" />
+          <End Type="AuctionDataModel.Rating" Role="Rating" Multiplicity="*" />
+        </Association>
+        <Association Name="RatingProduct">
+          <End Type="AuctionDataModel.Rating" Role="Rating" Multiplicity="0..1" />
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="1" />
+        </Association>
+        <EntityType Name="Picture">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="path" Type="String" Nullable="false" />
+          <Property Name="title" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="AuctionDataModel.PictureProduct" FromRole="Picture" ToRole="Product" />
+        </EntityType>
+        <Association Name="PictureProduct">
+          <End Type="AuctionDataModel.Picture" Role="Picture" Multiplicity="1" >
+          </End>
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <EntityType Name="Features">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="description" Type="String" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="AuctionDataModel.ProductFeatures" FromRole="Features" ToRole="Product" />
+        </EntityType>
+        <Association Name="ProductFeatures">
+          <End Type="AuctionDataModel.Product" Role="Product" Multiplicity="*" />
+          <End Type="AuctionDataModel.Features" Role="Features" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AuctionDataModelStoreContainer" CdmEntityContainer="AuctionDataModelContainer">
+    <EntitySetMapping Name="ProfileSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Profile)">
+        <MappingFragment StoreEntitySet="ProfileSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="fName" ColumnName="fName" />
+          <ScalarProperty Name="lName" ColumnName="lName" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Product)">
+        <MappingFragment StoreEntitySet="ProductSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="endtime" ColumnName="endtime" />
+          <ScalarProperty Name="active" ColumnName="active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BidSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Bid)">
+        <MappingFragment StoreEntitySet="BidSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="amount" ColumnName="amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RatingSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Rating)">
+        <MappingFragment StoreEntitySet="RatingSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="score" ColumnName="score" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PictureSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Picture)">
+        <MappingFragment StoreEntitySet="PictureSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="path" ColumnName="path" />
+          <ScalarProperty Name="title" ColumnName="title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FeaturesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(AuctionDataModel.Features)">
+        <MappingFragment StoreEntitySet="FeaturesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="ProfileProduct" TypeName="AuctionDataModel.ProfileProduct" StoreEntitySet="ProductSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="buyer_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="buyer_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductProfile" TypeName="AuctionDataModel.ProductProfile" StoreEntitySet="ProductSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="profile_Id" />
+      </EndProperty>
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProfileBid" TypeName="AuctionDataModel.ProfileBid" StoreEntitySet="BidSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="profile_Id" />
+      </EndProperty>
+      <EndProperty Name="Bid">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductBid" TypeName="AuctionDataModel.ProductBid" StoreEntitySet="BidSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="product_Id" />
+      </EndProperty>
+      <EndProperty Name="Bid">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProfileRating" TypeName="AuctionDataModel.ProfileRating" StoreEntitySet="RatingSet">
+      <EndProperty Name="Profile">
+        <ScalarProperty Name="Id" ColumnName="Author_Id" />
+      </EndProperty>
+      <EndProperty Name="Rating">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RatingProduct" TypeName="AuctionDataModel.RatingProduct" StoreEntitySet="RatingSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Rating">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PictureProduct" TypeName="AuctionDataModel.PictureProduct" StoreEntitySet="PictureSet">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Picture">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProductFeatures" TypeName="AuctionDataModel.ProductFeatures" StoreEntitySet="ProductFeatures">
+      <EndProperty Name="Product">
+        <ScalarProperty Name="Id" ColumnName="Product_Id" />
+      </EndProperty>
+      <EndProperty Name="Features">
+        <ScalarProperty Name="Id" ColumnName="Features_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
